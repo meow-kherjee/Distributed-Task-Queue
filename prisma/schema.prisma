@@ -1,0 +1,19 @@
+// This is where i'll be defining the schemas
+
+generator client { // generates client used my node app
+  provider = "prisma-client-js"
+}
+
+datasource db { // tells prisma which database to connect to
+  provider = "postgresql"
+}
+
+enum TaskStatus {
+  SUCCESSFUL
+  FAILED
+}
+
+model Task {
+  id String @id @db.Uuid // String -> prisma type, @id -> primary key, @db.Uuid -> db will have uuid as col. type
+  status TaskStatus // it will get either of the values defined using enum
+}
