@@ -11,9 +11,18 @@ async function CreateNewTask(req, res) {
         payload: {
             to: taskData.to,
             subject: taskData.subject,
-            body: taskObj.body,
+            body: taskData.content,
         },
     };
+    await prisma.todo.create({
+        data: {
+            taskId: taskObj.taskId,
+            retryCount: taskObj.retryCount,
+            maxRetry: taskObj.maxRetry,
+            payload: JSON.stringify(taskObj.payload),
+        },
+    });
+    await redisClient.lPush("queue:email", JSON.stringify(taskObj));
 }
 
 export { CreateNewTask };

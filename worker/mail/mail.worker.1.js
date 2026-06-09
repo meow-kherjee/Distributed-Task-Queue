@@ -1,5 +1,5 @@
-import { redisClient, redisConnect } from "../../redis/redis.js";
 import { mailHandler } from "./mail.worker.js";
+import { redisClient, redisConnect } from "../../redis/redis.js";
 
 await redisConnect();
 

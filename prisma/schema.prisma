@@ -14,12 +14,12 @@ enum TaskStatus {
 }
 
 model Task {
-  id     String     @id @db.Uuid // String -> prisma type, @id -> primary key, @db.Uuid -> db will have uuid as col. type
+  taskId String     @id @db.Uuid // String -> prisma type, @id -> primary key, @db.Uuid -> db will have uuid as col. type
   status TaskStatus // it will get either of the values defined using enum
 }
 
 model Todo {
-  id         String @id @db.Uuid
+  taskId     String @id @db.Uuid
   retryCount Int    @db.Integer
   maxRetry   Int    @db.Integer
   payload    Json   @db.Json
