@@ -20,13 +20,6 @@ async function mailHandlerFail() {
     console.log("Error in mail-sender");
     const todos = await prisma.todo.findMany();
     todos.forEach(async (todo) => {
-        console.log({
-            retryCount: todo.retryCount,
-            maxRetry: todo.maxRetry,
-            retryType: typeof todo.retryCount,
-            maxType: typeof todo.maxRetry,
-            result: todo.retryCount <= todo.maxRetry,
-        });
         if (todo.retryCount <= todo.maxRetry) {
             await prisma.todo.update({
                 where: {
