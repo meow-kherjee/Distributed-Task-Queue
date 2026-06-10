@@ -1,22 +1,24 @@
 import { mailHandler } from "./mail.worker.js";
 import { redisClient, redisConnect } from "../../redis/redis.js";
+import { mailHandlerSucc, mailHandlerFail } from "./mail.utils.js";
 
 await redisConnect();
 
 while (true) {
+    // do exception handling for redis
     try {
-        const popped = await redisClient.brPop("queue:mail", 0);
-        const task = JSON.parse(popped.element);
-        const payload = task.payload;
-        task.status = "processsing";
-        await mailHandler(
+        const poppedObj = await redisClient.brPop("queue:email", 0);
+        const taskObj = JSON.parse(poppedObj.element);
+        const payload = taskObj.payload;
+        const mailOutput = await mailHandler(
             process.env.SENDER_EMAIL,
             payload.to,
             payload.subject,
-            payload.content,
+            payload.body,
         );
-        task.status = "success";
-        console.log(task);
+        console.log(mailOutput);
+        if (mailOutput.error == null) mailHandlerSucc(taskObj);
+        else mailHandlerFail();
     } catch (SocketClosedUnexpectedlyError) {
         console.log("Redis unexpectedly disconnected!");
     }

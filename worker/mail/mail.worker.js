@@ -5,15 +5,14 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function mailHandler(from, to, subject, text) {
     try {
-        const output = await resend.emails.send({
+        return await resend.emails.send({
             from: from,
             to: to,
             subject: subject,
             text: text,
         });
-        console.log(output);
     } catch (err) {
-        console.log(err);
+        return err;
     }
 }
 
