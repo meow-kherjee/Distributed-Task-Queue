@@ -1,5 +1,5 @@
 import { prisma } from "../db/prisma.js";
-import { redisClient } from "../redis/redis.js";
+import { redisClient } from "../redis/redis.server.js";
 import { v4 as uuidv4 } from "uuid";
 
 async function CreateNewTask(req, res) {

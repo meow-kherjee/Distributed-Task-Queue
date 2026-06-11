@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { redisConnect } from "../redis/redis.js";
+import { redisConnect } from "../redis/redis.server.js";
 
 import { routerNewTask } from "../route/new.task.js"; // route imports
 

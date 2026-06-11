@@ -4,6 +4,7 @@ import { createClient } from "redis";
 const portRedis = process.env.PORT_REDIS;
 
 const redisClient = createClient({
+    // multiple createClients in diferent modules mean multiple clients
     host: "127.0.0.1",
     port: portRedis,
 });
